@@ -1,21 +1,26 @@
+import { ParsedToken, parseTokenReponse } from "../lib/Token";
 import { ErrorRes } from "./errorRes";
+import { Cliente } from "./Cliente";
 
-export type Token = {
+export type ApiToken = {
+    id: number;
+    token: string;
+    fechaGeneracion: Date;
+    fechaExpiracion: Date;
+    activo: boolean;
+    cliente: Cliente;
+    clienteId: number;
+};
+
+export type TokenData = {
     data: {
-        token: {
-            id: number;
-            token: string;
-            fechaGeneracion: Date;
-            fechaExpiracion: Date;
-            activo: boolean;
-            usuarioId: number;
-        };
+        token: ApiToken;
         timeLeft: number;
     };
 };
 
 type TokenResponse =
-    | { success: true; data: Token }
+    | { success: true; data: TokenData }
     | { success: false; error: ErrorRes };
 
 export async function getActiveToken(cliente: number): Promise<TokenResponse> {
@@ -28,12 +33,13 @@ export async function getActiveToken(cliente: number): Promise<TokenResponse> {
         return { success: false, error: token as unknown as ErrorRes };
     }
 
-    return { success: true, data: token as unknown as Token };
+    return { success: true, data: token as unknown as TokenData };
 }
 
-export async function getAllTokens(): Promise<Token[]> {
+export async function getAllTokens(): Promise<ParsedToken[]> {
     const res = await fetch("http://localhost:5000/tokens");
     const tokens = await res.json();
+    const parsedTokens = parseTokenReponse(tokens);
 
-    return tokens;
+    return parsedTokens;
 }

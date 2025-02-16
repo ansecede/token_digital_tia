@@ -1,5 +1,5 @@
 "use client";
-import { getActiveToken, Token } from "@/src/api/Token";
+import { getActiveToken, TokenData } from "@/src/api/Token";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -15,7 +15,7 @@ export default function TokenPage() {
         throw new Error("Parámetro cliente debe ser un valor númerico");
     }
 
-    const [activeToken, setActiveToken] = useState<Token>();
+    const [activeToken, setActiveToken] = useState<TokenData>();
 
     useEffect(() => {
         async function fetchActiveToken() {

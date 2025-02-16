@@ -20,12 +20,7 @@ router.get("/tokens", async (_, res) => {
         },
     });
 
-    const flattenTokens = tokens.map((token) => ({
-        ...token,
-        nombreCliente: token.cliente.nombre,
-    }));
-
-    res.send(flattenTokens);
+    res.send(tokens);
 });
 
 router.get(
