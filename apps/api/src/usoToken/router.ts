@@ -12,7 +12,13 @@ import prisma from "../lib/db";
 const router: Router = Router();
 const TOKEN_GENERATION_TYPE: TokenGenerationType = "simple";
 
-router.get(
+router.get("/usosToken", async (_, res) => {
+    const usoTokens = await prisma.usoToken.findMany();
+
+    res.send(usoTokens);
+});
+
+router.post(
     "/usarToken",
     async (
         req: Request<unknown, unknown, unknown, UsarTokenQueryParams>,

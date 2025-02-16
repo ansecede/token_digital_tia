@@ -1,11 +1,10 @@
 "use client";
-import { getToken, Token } from "@/src/api/Token";
+import { getActiveToken, Token } from "@/src/api/Token";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function TokenPage() {
     const searchParams = useSearchParams();
-
     const cliente = searchParams.get("cliente");
     if (!cliente)
         throw new Error(
@@ -15,26 +14,26 @@ export default function TokenPage() {
     if (isNaN(clienteId)) {
         throw new Error("Parámetro cliente debe ser un valor númerico");
     }
-    const [token, setToken] = useState<Token>();
+
+    const [activeToken, setActiveToken] = useState<Token>();
 
     useEffect(() => {
-        async function fetchToken() {
-            const token = await getToken(clienteId);
-            if (!token.success) {
-                throw new Error(token.error.message);
+        async function fetchActiveToken() {
+            const activeToken = await getActiveToken(clienteId);
+            if (!activeToken.success) {
+                throw new Error(activeToken.error.message);
             }
-            console.log(token);
 
-            setToken(token.data);
+            setActiveToken(activeToken.data);
         }
 
-        fetchToken();
+        fetchActiveToken();
     }, [clienteId]);
 
     return (
         <div>
             <p>TokenPage</p>
-            <pre>{JSON.stringify(token, null, 4)}</pre>
+            <pre>{JSON.stringify(activeToken, null, 4)}</pre>
         </div>
     );
 }

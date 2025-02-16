@@ -18,7 +18,7 @@ type TokenResponse =
     | { success: true; data: Token }
     | { success: false; error: ErrorRes };
 
-export async function getToken(cliente: number): Promise<TokenResponse> {
+export async function getActiveToken(cliente: number): Promise<TokenResponse> {
     const res = await fetch(
         `http://localhost:5000/generarToken?cliente=${cliente}`
     );
@@ -29,4 +29,11 @@ export async function getToken(cliente: number): Promise<TokenResponse> {
     }
 
     return { success: true, data: token as unknown as Token };
+}
+
+export async function getAllTokens(): Promise<Token[]> {
+    const res = await fetch("http://localhost:5000/tokens");
+    const tokens = await res.json();
+
+    return tokens;
 }

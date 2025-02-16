@@ -13,6 +13,12 @@ import prisma from "../lib/db";
 const router: Router = Router();
 const TOKEN_GENERATION_TYPE: TokenGenerationType = "simple";
 
+router.get("/tokens", async (_, res) => {
+    const tokens = await prisma.token.findMany();
+
+    res.send(tokens);
+});
+
 router.get(
     "/generarToken",
     async (
@@ -43,10 +49,8 @@ router.get(
                 tokenGenerator
             );
             return res.send({
-                data: {
-                    token: newToken,
-                    timeLeft: TOKEN_VALID_TIME_S,
-                },
+                token: newToken,
+                timeLeft: TOKEN_VALID_TIME_S,
             });
         }
 
@@ -62,19 +66,15 @@ router.get(
                 tokenGenerator
             );
             return res.send({
-                data: {
-                    token: newToken,
-                    timeLeft: TOKEN_VALID_TIME_S,
-                },
+                token: newToken,
+                timeLeft: TOKEN_VALID_TIME_S,
             });
         }
 
         // Devolver el token con el tiempo restante
         res.send({
-            data: {
-                token: tokenActivo,
-                timeLeft: timeLeft,
-            },
+            token: tokenActivo,
+            timeLeft: timeLeft,
         });
     }
 );

@@ -8,4 +8,4 @@ if (!global.prisma) {
 }
 
 // @ts-expect-error Trying to extend global module
-export default global.prisma;
+export default global.prisma as PrismaClient;
