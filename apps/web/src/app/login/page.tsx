@@ -1,6 +1,7 @@
 import { Button } from "@/src/components/ui/button";
 import { Input } from "@/src/components/ui/input";
 import { Label } from "@/src/components/ui/label";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 // import  { useActionState } from "react";
 
@@ -12,16 +13,19 @@ export default function LoginPage() {
             <form
                 action={async (formData) => {
                     "use server";
-                    redirect(`/token?cliente=${formData.get("userId")}`);
+                    const clienteId = formData.get("clienteId");
+                    const cookiesStore = await cookies();
+                    cookiesStore.set("clienteId", clienteId as string);
+                    redirect(`/token?cliente=${formData.get("clienteId")}`);
                 }}
                 className="w-full min-w-3xs px-10 flex gap-2 flex-col items-left py-28 rounded-2xl bg-black/20"
             >
-                <Label htmlFor="userId" className="text-xl">
+                <Label htmlFor="clienteId" className="text-xl">
                     Id de Usuario:
                 </Label>
                 <Input
-                    name="userId"
-                    id="userId"
+                    name="clienteId"
+                    id="clienteId"
                     type="number"
                     min={1}
                     placeholder="Un número"
