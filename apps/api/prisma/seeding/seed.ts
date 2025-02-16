@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { createDefaultUsers } from "./usuarios.factory";
+import { createDefaultCustomers } from "./cliente.factory";
 import { createTokenUsageTypes } from "./tipoUsoToken.factory";
 
 const prisma = new PrismaClient();
 async function main() {
-    await createDefaultUsers(prisma);
+    await createDefaultCustomers(prisma);
     await createTokenUsageTypes(prisma);
 }
 main()

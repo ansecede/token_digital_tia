@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
-export async function createDefaultUsers(prisma: PrismaClient) {
+export async function createDefaultCustomers(prisma: PrismaClient) {
     const clientes = [
         { id: 1, nombre: "Andres" },
         { id: 2, nombre: "Daniel" },
