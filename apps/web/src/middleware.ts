@@ -10,12 +10,6 @@ export default async function middleware(req: NextRequest) {
 
     const cookiesStore = await cookies();
     const clienteId = cookiesStore.get("clienteId");
-    console.log({
-        path,
-        isTokenRoute,
-        hasClientParam,
-        shouldRedirect,
-    });
 
     if (clienteId && shouldRedirect) {
         const sss = new URL(`/token?cliente=${clienteId.value}`, req.nextUrl);
