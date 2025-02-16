@@ -2,7 +2,8 @@ import { json, urlencoded } from "body-parser";
 import express, { type Express } from "express";
 import morgan from "morgan";
 import cors from "cors";
-import router from "./endpoints";
+import tokenRouter from "./token/router";
+import usoTokenRouter from "./usoToken/router";
 
 export const createServer = (): Express => {
     const app = express();
@@ -13,7 +14,8 @@ export const createServer = (): Express => {
         .get("/", (_, res) => {
             return res.json({ hello: "world" });
         })
-        .use(router);
+        .use(tokenRouter)
+        .use(usoTokenRouter);
 
     return app;
 };
