@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id       Int        @id @default(autoincrement())
+  nombre   String
+  Token    Token[]
+  UsoToken UsoToken[]
+
+  @@map("usuarios")
+}
+
+model Token {
+  id              Int        @id @default(autoincrement())
+  token           String     @unique
+  fechaGeneracion DateTime   @default(now()) @map("fecha_generacion")
+  fechaExpiracion DateTime   @map("fecha_expiración")
+  activo          Boolean    @default(true)
+  usuarioId       Int        @map("usuario_id")
+  usuario         Usuario    @relation(fields: [usuarioId], references: [id])
+  usosToken       UsoToken[]
+
+  @@map("tokens")
+}
+
+model UsoToken {
+  id         Int      @id @default(autoincrement())
+  fechaUso   DateTime @default(now())
+  tokenUsado String // Para registrar el token usado en el momento del uso
+  tokenId    Int
+  token      Token    @relation(fields: [tokenId], references: [id])
+  usuarioId  Int
+  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+
+  @@map("uso_tokens")
+}

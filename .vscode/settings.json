@@ -1,0 +1,8 @@
+{
+    "github.copilot.chat.localeOverride": "es",
+    "eslint.workingDirectories": [
+        {
+            "mode": "auto"
+        }
+    ]
+}
