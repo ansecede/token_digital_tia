@@ -10,12 +10,12 @@ type TokenUsageType = keyof typeof tokenUsageTypes;
 
 export async function createUsoToken(
     {
-        usuarioId,
+        clienteId,
         tokenId,
         recievedToken,
         tipoUsoName,
     }: {
-        usuarioId: number;
+        clienteId: number;
         tokenId: number;
         recievedToken: string;
         tipoUsoName: TokenUsageType;
@@ -35,7 +35,7 @@ export async function createUsoToken(
         data: {
             tokenUsado: recievedToken,
             tokenId,
-            usuarioId,
+            clienteId,
             tipoUsoId: tipoUsoId.id,
         },
     });

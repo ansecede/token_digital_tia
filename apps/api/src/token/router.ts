@@ -14,9 +14,18 @@ const router: Router = Router();
 const TOKEN_GENERATION_TYPE: TokenGenerationType = "simple";
 
 router.get("/tokens", async (_, res) => {
-    const tokens = await prisma.token.findMany();
+    const tokens = await prisma.token.findMany({
+        include: {
+            cliente: true,
+        },
+    });
 
-    res.send(tokens);
+    const flattenTokens = tokens.map((token) => ({
+        ...token,
+        nombreCliente: token.cliente.nombre,
+    }));
+
+    res.send(flattenTokens);
 });
 
 router.get(
@@ -29,7 +38,7 @@ router.get(
         if (!clientePorBuscar) {
             return sendError(res, "BAD_REQUEST", "ID del cliente es requerido");
         }
-        const cliente = await prisma.usuario.findUnique({
+        const cliente = await prisma.cliente.findUnique({
             where: { id: +clientePorBuscar },
         });
         if (!cliente) {
@@ -37,7 +46,7 @@ router.get(
         }
 
         const tokenActivo = await prisma.token.findFirst({
-            where: { usuarioId: cliente.id, activo: true },
+            where: { clienteId: cliente.id, activo: true },
         });
 
         const tokenGenerator = tokenGeneratorFactory(TOKEN_GENERATION_TYPE);

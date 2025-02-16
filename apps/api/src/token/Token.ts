@@ -12,7 +12,7 @@ export function calcTimeLeft(token: Token) {
 }
 
 export async function createToken(
-    usuarioId: number,
+    clienteId: number,
     prisma: PrismaClient,
     tokenGenerator: () => string
 ) {
@@ -28,7 +28,7 @@ export async function createToken(
         data: {
             token: generatedToken,
             fechaExpiracion,
-            usuarioId,
+            clienteId,
         },
     });
 }

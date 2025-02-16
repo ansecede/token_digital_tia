@@ -10,13 +10,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Usuario {
+model Cliente {
   id       Int        @id @default(autoincrement())
   nombre   String
   Token    Token[]
   UsoToken UsoToken[]
 
-  @@map("usuarios")
+  @@map("clientes")
 }
 
 model Token {
@@ -25,8 +25,8 @@ model Token {
   fechaGeneracion DateTime   @default(now()) @map("fecha_generacion")
   fechaExpiracion DateTime   @map("fecha_expiración")
   activo          Boolean    @default(true)
-  usuarioId       Int        @map("usuario_id")
-  usuario         Usuario    @relation(fields: [usuarioId], references: [id])
+  clienteId       Int        @map("cliente_id")
+  cliente         Cliente    @relation(fields: [clienteId], references: [id])
   usosToken       UsoToken[]
 
   @@map("tokens")
@@ -38,8 +38,8 @@ model UsoToken {
   tokenUsado String       @map("token_usado")
   tokenId    Int          @map("token_id")
   token      Token        @relation(fields: [tokenId], references: [id])
-  usuarioId  Int          @map("usuario_id")
-  usuario    Usuario      @relation(fields: [usuarioId], references: [id])
+  clienteId  Int          @map("cliente_id")
+  cliente    Cliente      @relation(fields: [clienteId], references: [id])
   tipoUsoId  Int          @map("tipo_uso_id")
   tipoUso    TipoUsoToken @relation(fields: [tipoUsoId], references: [id])
 

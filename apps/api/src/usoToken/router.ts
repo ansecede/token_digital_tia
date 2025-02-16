@@ -28,24 +28,24 @@ router.post(
         const tokenRecibido = req.query.token;
 
         const tokenActivo = await prisma.token.findFirst({
-            where: { usuarioId: +idCliente, activo: true },
+            where: { clienteId: +idCliente, activo: true },
         });
 
         if (!tokenActivo) {
-            // Este usuario no ha generado ningun token aun, así que devolver error
+            // Este cliente no ha generado ningun token aun, así que devolver error
             // await createUsoToken(
             //     {
             //         recievedToken: tokenRecibido,
             //         tipoUsoName: "INACTIVE",
             //         tokenId: tokenActivo.id,
-            //         usuarioId: tokenActivo.usuarioId,
+            //         clienteId: tokenActivo.clienteId,
             //     },
             //     prisma
             // );
             return sendError(
                 res,
                 "BAD_REQUEST",
-                "El usuario no tiene un token activo"
+                "El cliente no tiene un token activo"
             );
         }
 
@@ -61,7 +61,7 @@ router.post(
                     recievedToken: tokenRecibido,
                     tipoUsoName: "EXPIRED",
                     tokenId: tokenActivo.id,
-                    usuarioId: tokenActivo.usuarioId,
+                    clienteId: tokenActivo.clienteId,
                 },
                 prisma
             );
@@ -77,7 +77,7 @@ router.post(
                     recievedToken: tokenRecibido,
                     tipoUsoName: "NOT_VALID",
                     tokenId: tokenActivo.id,
-                    usuarioId: tokenActivo.usuarioId,
+                    clienteId: tokenActivo.clienteId,
                 },
                 prisma
             );
@@ -90,7 +90,7 @@ router.post(
                 recievedToken: tokenRecibido,
                 tipoUsoName: "SUCCESS",
                 tokenId: tokenActivo.id,
-                usuarioId: tokenActivo.usuarioId,
+                clienteId: tokenActivo.clienteId,
             },
             prisma
         );
