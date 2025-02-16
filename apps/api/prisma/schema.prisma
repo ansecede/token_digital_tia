@@ -33,13 +33,24 @@ model Token {
 }
 
 model UsoToken {
-  id         Int      @id @default(autoincrement())
-  fechaUso   DateTime @default(now())
-  tokenUsado String // Para registrar el token usado en el momento del uso
-  tokenId    Int
-  token      Token    @relation(fields: [tokenId], references: [id])
-  usuarioId  Int
-  usuario    Usuario  @relation(fields: [usuarioId], references: [id])
+  id         Int          @id @default(autoincrement())
+  fechaUso   DateTime     @default(now()) @map("fecha_uso")
+  tokenUsado String       @map("token_usado")
+  tokenId    Int          @map("token_id")
+  token      Token        @relation(fields: [tokenId], references: [id])
+  usuarioId  Int          @map("usuario_id")
+  usuario    Usuario      @relation(fields: [usuarioId], references: [id])
+  tipoUsoId  Int          @map("tipo_uso_id")
+  tipoUso    TipoUsoToken @relation(fields: [tipoUsoId], references: [id])
 
   @@map("uso_tokens")
+}
+
+model TipoUsoToken {
+  id          Int        @id @default(autoincrement())
+  nombre      String
+  descripcion String
+  UsoToken    UsoToken[]
+
+  @@map("tipo_uso_token")
 }
