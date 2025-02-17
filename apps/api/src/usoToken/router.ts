@@ -13,7 +13,12 @@ const router: Router = Router();
 const TOKEN_GENERATION_TYPE: TokenGenerationType = "simple";
 
 router.get("/usosToken", async (_, res) => {
-    const usoTokens = await prisma.usoToken.findMany();
+    const usoTokens = await prisma.usoToken.findMany({
+        include: {
+            cliente: true,
+            tipoUso: true,
+        },
+    });
 
     res.send(usoTokens);
 });

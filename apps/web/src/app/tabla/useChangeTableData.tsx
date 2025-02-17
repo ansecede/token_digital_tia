@@ -27,8 +27,8 @@ export default function useChangeTableData() {
             const usos = await getUsosToken();
             const tokens = await getAllTokens();
 
-            setTokens(tokens);
             setUsos(usos);
+            setTokens(tokens);
         }
 
         fetchToken();
