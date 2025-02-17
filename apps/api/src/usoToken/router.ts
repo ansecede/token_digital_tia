@@ -72,6 +72,7 @@ router.post(
             );
             return sendError(res, "BAD_REQUEST", "Token no válido");
         }
+
         // Comparar tokens
         const tokenComparer = tokensComparerFactory(TOKEN_GENERATION_TYPE);
         const result = tokenComparer(tokenActivo.token, tokenRecibido);

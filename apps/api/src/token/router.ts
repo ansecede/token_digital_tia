@@ -13,6 +13,12 @@ import prisma from "../lib/db";
 const router: Router = Router();
 const TOKEN_GENERATION_TYPE: TokenGenerationType = "simple";
 
+router.get("/crypto", async (_, res) => {
+    const tokenGenerator = tokenGeneratorFactory("crypto");
+    const token = await tokenGenerator();
+    res.send(token);
+});
+
 router.get("/tokens", async (_, res) => {
     const tokens = await prisma.token.findMany({
         include: {
