@@ -1,0 +1,16 @@
+version: '3.1'
+
+services:
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: tia
+      MYSQL_USER: token
+      MYSQL_PASSWORD: tokendigital
+      MYSQL_ROOT_PASSWORD: tokendigital
+    ports:
+      - 3306:3306
+    expose:
+      - 3306

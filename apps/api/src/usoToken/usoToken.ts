@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 export const tokenUsageTypes = {
     SUCCESS: "Exitoso",
     INACTIVE: "No activo",
-    EXPIRED: "",
+    EXPIRED: "Ningún token activo",
     NOT_VALID: "No válido",
 } as const;
 type TokenUsageType = keyof typeof tokenUsageTypes;
