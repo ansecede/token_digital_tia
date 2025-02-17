@@ -13,10 +13,8 @@ export type ApiToken = {
 };
 
 export type TokenData = {
-    data: {
-        token: ApiToken;
-        timeLeft: number;
-    };
+    token: ApiToken;
+    timeLeft: number;
 };
 
 type TokenResponse =
